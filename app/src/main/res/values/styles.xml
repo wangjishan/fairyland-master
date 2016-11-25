@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
+
+
+
+
+
+    <!-- 字体大小的设置 -->
+    <style name="textsize12">
+        <item name="android:textSize">12dp</item>
+    </style>
+
+    <style name="textsize13">
+        <item name="android:textSize">13dp</item>
+    </style>
+
+    <style name="textsize14">
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="textsize15">
+        <item name="android:textSize">15dp</item>
+    </style>
+
+    <style name="textsize16">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="textsize18">
+        <item name="android:textSize">18dp</item>
+    </style>
+
+    <style name="textsize20">
+        <item name="android:textSize">20dp</item>
+    </style>
+
+    <style name="textsize22">
+        <item name="android:textSize">22dp</item>
+    </style>
+
+
+
+</resources>

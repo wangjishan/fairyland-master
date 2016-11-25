@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+
+
+
+
+
+    <!-- 页面的前景 -->
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#999999</color>
+    <color name="_picker_select_item">#b0000000</color>
+
+
+</resources>
