@@ -8,8 +8,10 @@ import android.view.View;
 
 import com.otaku.fairyland.R;
 import com.otaku.fairyland.base.BaseActivity;
+import com.otaku.fairyland.main.AdvertiseInfo;
 import com.otaku.fairyland.main.RecommendInfo;
 import com.otaku.fairyland.main.Recommends;
+import com.otaku.fairyland.main.adapter.HeaderPagerAdapter;
 import com.otaku.fairyland.main.adapter.MainActivityAdapter;
 import com.otaku.fairyland.main.presenter.MainActivityPresenterImpl;
 import com.otaku.fairyland.main.view.MainActivityView;
@@ -35,6 +37,8 @@ public class MainActivity extends BaseActivity implements MainActivityView {
     private MainActivityAdapter mainActivityAdapter;
     private MainActivityPresenterImpl mainfragmentpresenterimpl;
     private List<Recommends> RecommendList = new ArrayList<Recommends>();
+    private List<Recommends> photoPaths = new ArrayList<Recommends>();
+    private HeaderPagerAdapter headerPagerAdapter;
 
 
     @Override
@@ -50,8 +54,6 @@ public class MainActivity extends BaseActivity implements MainActivityView {
 
     private void initializeView() {
 
-//        PreloadRecommendList();
-
         mainfragmentpresenterimpl = new MainActivityPresenterImpl(this);
         swipeRefreshLayout = (MySwipeRefreshLayout) this.findViewById(R.id.swipeRefreshLayout);
         lv_main = (RecyclerView) this.findViewById(R.id.Main_RecyclerView);
@@ -65,7 +67,7 @@ public class MainActivity extends BaseActivity implements MainActivityView {
         lv_main.setLayoutManager(layoutManager);
 
         mainActivityAdapter = new MainActivityAdapter(this, lv_main, RecommendList, R.layout.mainactivityadapter_layout);
-//        headerPagerAdapter = new HeaderPagerAdapter(getActivity(), photoPaths);
+        headerPagerAdapter = new HeaderPagerAdapter(this, photoPaths);
         mainActivityAdapter.addHeadView(header);
 
         initializeData();
@@ -76,8 +78,8 @@ public class MainActivity extends BaseActivity implements MainActivityView {
     private void initializeData() {
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
         lv_main.setAdapter(mainActivityAdapter);
-//        viewPager.setAdapter(headerPagerAdapter);
-//        indicator.setViewPager(viewPager);
+        viewPager.setAdapter(headerPagerAdapter);
+        indicator.setViewPager(viewPager);
 
         swipeRefreshLayout.post(new Runnable() {
             @Override
@@ -86,6 +88,7 @@ public class MainActivity extends BaseActivity implements MainActivityView {
 //                if (!isDataLoaded) {
 //                    swipeRefreshLayout.setRefreshing(true);
 //                    NetForAdvertise();
+                NetForAdvertise();
                 NetForRecommendList();
 //                    NetForRecommendList(BaseRecylerViewAdapter.other);
 //                }
@@ -95,19 +98,28 @@ public class MainActivity extends BaseActivity implements MainActivityView {
 
 
     /*首页的列表*/
+    private void NetForAdvertise() {
+
+        HashMap<String, String> map = new HashMap<String, String>();
+        mainfragmentpresenterimpl.RequestAdvertiseList(NetUtils.getMapParamer("advertise", map));
+    }
+
+    /*首页的列表*/
     private void NetForRecommendList() {
 
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("page", "1");
         map.put("pageSize", "20");
-        mainfragmentpresenterimpl.RequestRecommendList(NetUtils.getMapParamer("EffectImageRecommendAction", map));
+        mainfragmentpresenterimpl.RequestRecommendList(NetUtils.getMapParamer("recommends", map));
 
     }
 
 
     @Override
-    public void ResultAdvertiseListSuccess() {
-
+    public void ResultAdvertiseListSuccess(AdvertiseInfo info) {
+        photoPaths.clear();
+        photoPaths.addAll(info.getData());
+        headerPagerAdapter.notifyDataSetChanged();
     }
 
     @Override

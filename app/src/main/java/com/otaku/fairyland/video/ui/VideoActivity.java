@@ -24,8 +24,10 @@ import org.lynxz.zzplayerlibrary.widget.VideoPlayer;
 public class VideoActivity extends BaseActivity {
 
 
+    public static String VIDEOURl = "VideoUrl";
+
     private VideoPlayer mVp;
-    private String mVideoUrl;
+    private String mVideoUrl = "";
 
 
     @Override
@@ -36,6 +38,8 @@ public class VideoActivity extends BaseActivity {
 //        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
         setContentView(R.layout.videoactivity_layout);
+
+        mVideoUrl = getIntent().getExtras().getString(VIDEOURl);
 
         initData();
         initView();
@@ -77,7 +81,7 @@ public class VideoActivity extends BaseActivity {
 
     private void initData() {
         //        mVideoUrl = "android.resource://" + getPackageName() + "/" + R.raw.shuai_dan_ge;
-        mVideoUrl = "http://www.dubblogs.cc:8751/Android/Test/Media/3gp/test.3gp";
+//        mVideoUrl = "http://124.205.69.166/mp4files/50630000045C1BA0/45.43.9.2/media/videos/mp4/8422.mp4";
     }
 
     private void initView() {
@@ -143,7 +147,6 @@ public class VideoActivity extends BaseActivity {
         super.onDestroy();
         mVp.onHostDestroy();
     }
-
 
 
 }

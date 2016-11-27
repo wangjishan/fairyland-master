@@ -1,6 +1,7 @@
 package com.otaku.fairyland.main.model;
 
 import com.otaku.fairyland.configuration.ConstantValues;
+import com.otaku.fairyland.main.AdvertiseInfo;
 import com.otaku.fairyland.main.RecommendInfo;
 import com.otaku.fairyland.net.NetUtils;
 import com.otaku.fairyland.utils.JsonUtils;
@@ -26,7 +27,60 @@ public class MainActivityModelImpl implements MainActivityModel {
     @Override
     public void AdvertiseListRequest(HashMap<String, String> map, OnResultListener listener) {
 
+
+        OkHttpUtils.get()
+                .url(NetUtils.url)
+                .params(map)
+                .build()
+                .execute(new AdvertiseListRequestCallback(listener));
+
+
     }
+
+
+    private class AdvertiseListRequestCallback extends StringCallback {
+
+        private OnResultListener mListener;
+
+        private AdvertiseListRequestCallback(OnResultListener listener) {
+            this.mListener = listener;
+        }
+
+        @Override
+        public void onBefore(Request request, int id) {
+        }
+
+        @Override
+        public void onAfter(int id) {
+        }
+
+        @Override
+        public void onError(Call call, Exception e, int id) {
+            if (!StringUtils.isNullOrEmpty(e.getMessage())) {
+                mListener.onAdvertiseListFailure(e.getMessage());
+            }
+        }
+
+        @Override
+        public void onResponse(String response, int id) {
+            try {
+                AdvertiseInfo bean = JsonUtils.getJson(response, AdvertiseInfo.class);
+                if (bean != null && bean.getCode().equals(ConstantValues.REQUEST_SUCCESS)) {
+                    mListener.onAdvertiseListSuccess(bean);
+                } else if (bean != null) {
+                    mListener.onAdvertiseListFailure(bean.getMessage());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                mListener.onAdvertiseListFailure("获取广告失败");
+            }
+        }
+
+        @Override
+        public void inProgress(float progress, long total, int id) {
+        }
+    }
+
 
     @Override
     public void RecommendListRequest(HashMap<String, String> map, OnResultListener listener) {
@@ -49,6 +103,7 @@ public class MainActivityModelImpl implements MainActivityModel {
 
         @Override
         public void onBefore(Request request, int id) {
+            this.mListener.onRecommendListStart();
         }
 
         @Override
@@ -85,7 +140,7 @@ public class MainActivityModelImpl implements MainActivityModel {
 
     public interface OnResultListener {
 
-        void onAdvertiseListSuccess();
+        void onAdvertiseListSuccess(AdvertiseInfo info);
 
         void onAdvertiseListFailure(String failureStr);
 

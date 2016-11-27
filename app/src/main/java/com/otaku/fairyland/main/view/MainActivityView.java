@@ -1,5 +1,6 @@
 package com.otaku.fairyland.main.view;
 
+import com.otaku.fairyland.main.AdvertiseInfo;
 import com.otaku.fairyland.main.RecommendInfo;
 
 /**
@@ -13,7 +14,7 @@ public interface MainActivityView {
 
 
     /*首页案例请求成功*/
-    void ResultAdvertiseListSuccess();
+    void ResultAdvertiseListSuccess(AdvertiseInfo info);
 
     /*首页案例请求失败*/
     void ResultAdvertiseListFailure(String failureStr);

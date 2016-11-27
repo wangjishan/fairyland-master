@@ -1,5 +1,6 @@
 package com.otaku.fairyland.main.presenter;
 
+import com.otaku.fairyland.main.AdvertiseInfo;
 import com.otaku.fairyland.main.RecommendInfo;
 import com.otaku.fairyland.main.model.MainActivityModelImpl;
 import com.otaku.fairyland.main.view.MainActivityView;
@@ -25,13 +26,13 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainAct
     }
 
     @Override
-    public void onAdvertiseListSuccess() {
-
+    public void onAdvertiseListSuccess(AdvertiseInfo info) {
+        mainActivityView.ResultAdvertiseListSuccess(info);
     }
 
     @Override
     public void onAdvertiseListFailure(String failureStr) {
-
+        mainActivityView.ResultAdvertiseListFailure(failureStr);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class MainActivityPresenterImpl implements MainActivityPresenter, MainAct
 
     @Override
     public void RequestAdvertiseList(HashMap<String, String> map) {
-
+        mainActivityModelImpl.AdvertiseListRequest(map,this);
     }
 
     @Override

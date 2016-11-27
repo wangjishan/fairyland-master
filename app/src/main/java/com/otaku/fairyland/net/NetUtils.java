@@ -29,7 +29,8 @@ public class NetUtils {
      */
 //    public static String url = "http://febscrest.ppku.cc/GetHandler.ashx?";
 //    http://wangjishan9.duapp.com/api.php?page=1&pageSize=20&output=json
-    public static String url = "http://wangjishan9.duapp.com/api.php?";
+    public static String url = "";
+    public static String staticUrl = "http://wangjishan9.duapp.com/app/";
     /**
      *
      */
@@ -40,7 +41,8 @@ public class NetUtils {
     public static java.util.HashMap<String, String> getMapParamer(String methodname, java.util.HashMap<String, String> parameter) {
         java.util.Date now = new java.util.Date();
         java.util.HashMap<String, String> map = new java.util.HashMap<String, String>();
-
+        url = "";
+        url = staticUrl + methodname + ".php?";
 //        map.put("app_key", MerchantCode);
 //        map.put("method", methodname);
         map.put("parameter", (parameter == null || parameter.size() <= 0) ? "{}" : StringUtils.getJsonStr(parameter));
